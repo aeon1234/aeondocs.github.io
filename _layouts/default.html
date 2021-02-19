@@ -22,8 +22,21 @@
         overflow-x: auto;
         flex: 3;
       }
+      .col-3 {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
       @media screen and (max-width: 42em){
           .col-1 {
+              display: none;
+          }
+          .col-3 {
+              display: none;
+          }
+      }
+      @media screen and (max-width: 60em){
+          .col-3 {
               display: none;
           }
       }
