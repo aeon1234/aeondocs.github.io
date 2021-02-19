@@ -10,6 +10,24 @@
     <meta name="theme-color" content="#157878">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+    <style>
+      .col-1 {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
+      .col-2 {
+        display: flex;
+        flex-direction: column;
+        overflow-x: auto;
+        flex: 2;
+      }
+      @media (max-width: 600px){
+          .col-1 {
+              display: none;
+          }
+      }
+    </style>
   </head>
   <body>
     <header class="page-header" role="banner">
@@ -25,22 +43,10 @@
       <a href="/aeon-wallet-rpc-options" class="btn">aeon-wallet-rpc Options</a>
       <a href="/aeon-wallet-rpc-commands" class="btn">aeon-wallet-rpc Commands</a><br>
     </header>
-
     <main id="content" class="main-content" role="main" style="display:flex;font-size:1rem;max-width: 100%;">
-      <div style="
-    display: flex;
-    flex-direction: column;
-    flex: 1;">
-        {% include toc.html html=content %}</div>
-      <div style="
-    display: flex;
-    flex-direction: column;
-    overflow-x: auto;
-    flex: 2;">
-      {{ content }}</div> <div style="
-    display: flex;
-    flex-direction: column;
-    flex: 1;"></div>
+      <div class="col-1">{% include toc.html html=content %}</div>
+      <div class="col-2">{{ content }}</div> 
+      <div class="col-1"></div>
     </main>
   </body>
 </html>
