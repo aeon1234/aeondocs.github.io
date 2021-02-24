@@ -9,15 +9,19 @@ title: "aeon-wallet-rpc Commands"
 `./aeon-wallet-rpc [options]`
 
 ## Description
+
 This allows one to interact with a wallet through HTTP requests.
 Every request has the following options:
+
 ```
 IP=127.0.0.1
 PORT=5000
 METHOD="get_balance"
 PARAMS="{"account_index":0,"address_indices":[0,1]}"
 ```
+
 Then send the information as a request to the server in the following format:
+
 ```
 curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"get_balance","params":{"account_index":0,"address_indices":[0,1]}}' -H 'Content-Type: application/json'
 ```
@@ -25,9 +29,11 @@ curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"get_
 ## Authentication 
 When a user login is required for the RPC, it follows the HTTP digest authentication scheme specified in [IETF RFC 2617](https://tools.ietf.org/html/rfc2617#page-7).
 If using `curl`, these parameters can be specified with the `-u` option as follows:
+
 ```
 curl http://127.0.0.1:5000/json_rpc -u username:password --digest -d '{"jsonrpc":"2.0","id":"0","method":"get_balance","params":{"account_index":0,"address_indices":[0,1]}}' -H 'Content-Type: application/json'
 ```
+
 To disable user authentication, use the option `disable-rpc-login` on launch.
 
 ## Commands
@@ -48,12 +54,14 @@ To disable user authentication, use the option `disable-rpc-login` on launch.
 #### `get_balance`
 
 *  Params
+
 ```
 int account_index
 int[] address_indices
 ```
 
 *  Response
+
 ```
 int balance
 int unlocked_balance
@@ -61,7 +69,9 @@ bool multisig_import_needed
 Subaddress[] per_subaddress
 int blocks_to_unlock
 ```
+
 where `Subaddress` has the following attributes:
+
 ```
 Subaddress:
   int address_index
@@ -73,7 +83,10 @@ Subaddress:
   int blocks_to_unlock
 ```
 
+
 *  Example
+
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"get_balance","params":{"account_index":0,"address_indices":[0,1]}}' -H 'Content-Type: application/json'
 {
@@ -104,17 +117,22 @@ Subaddress:
   }
 }
 ```
+
 #### `get_height`
+
 *  Params 
+
 ```
 ```
+
 *  Response
+
 ```
 int  height
 ```
 
-
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"get_height"}' -H 'Content-Type: application/json'
 {
@@ -125,18 +143,25 @@ int  height
   }
 }
 ```
+
 #### `start_mining`
+
 *  Params 
+
 ```
 int    threads_count
 bool        do_background_mining
 bool        ignore_battery
 ```
+
 *  Response 
+
 ```
+
 ```
 
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -150,13 +175,17 @@ bool        ignore_battery
 
 #### `stop_mining`
 *  Params 
+
 ```
 ```
+
 *  Response 
+
 ```
 ```
 
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -170,15 +199,20 @@ bool        ignore_battery
 
 #### `get_languages`
 *  Params 
+
 ```
+
 ```
+
 *  Response 
+
 ```
 string[] languages
 ```
 
 
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -190,19 +224,24 @@ string[] languages
 ```
 
 #### `create_wallet`
+
 *  Params 
+
 ```
 string filename
 string password
 string language
 
 ```
+
 *  Response 
+
 ```
 ```
 
 
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -214,17 +253,22 @@ string language
 ```
 
 #### `open_wallet`
+
 *  Params 
+
 ```
 string filename
 string password
 ```
+
 *  Response 
+
 ```
 ```
 
 
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -237,13 +281,17 @@ string password
 
 #### `close_wallet`
 *  Params
+
 ```
 ```
+
 *  Response 
+
 ```
 ```
 
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -257,15 +305,19 @@ string password
 
 #### `change_wallet_password`
 *  Params 
+
 ```
 string old_password
 string new_password
 ```
+
 *  Response 
+
 ```
 ```
 
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -279,6 +331,7 @@ string new_password
 
 #### `generate_from_keys`
 *  Params 
+
 ```
 int restore_height
 string filename
@@ -287,13 +340,16 @@ string spendkey
 string viewkey
 string password
 ```
+
 *  Response 
+
 ```
 string address
 string info
 ```
 
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -307,6 +363,7 @@ string info
 
 #### `restore_deterministic_wallet`
 *  Params 
+
 ```
 int restore_height
 string filename
@@ -315,7 +372,9 @@ string seed_offset
 string password
 string language
 ```
+
 *  Response 
+
 ```
 string address
 string seed
@@ -324,6 +383,7 @@ bool was_deprecated
 ```
 
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -337,14 +397,18 @@ bool was_deprecated
 
 #### `stop_wallet`
 *  Params 
+
 ```
 ```
+
 *  Response 
+
 ```
 ```
 
 
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -357,15 +421,19 @@ bool was_deprecated
 
 #### `rescan_blockchain`
 *  Params 
+
 ```
 ```
+
 *  Response 
+
 ```
 ```
 
 
 
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -375,19 +443,25 @@ bool was_deprecated
   }
 }
 ```
+
 #### `set_attribute`
 *  Params 
+
 ```
+
 string key
 string value
 ```
+
 *  Response 
+
 ```
 ```
 
 
 
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -397,18 +471,25 @@ string value
   }
 }
 ```
+
 #### `get_attribute`
+
 *  Params 
+
 ```
 string key
 ```
+
 *  Response 
+
 ```
+
 string value
 ```
 
 
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -422,6 +503,7 @@ string value
 #### `make_uri`
 
 * uri_spec
+
 ```
 string address
 string payment_id
@@ -429,11 +511,15 @@ int amount
 string tx_description
 string recipient_name
 ```
+
 *  Params 
+
 ```
 public uri_spec
 ```
+
 *  Response 
+
 ```
 string uri
 
@@ -441,6 +527,7 @@ string uri
 
 
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -452,10 +539,13 @@ string uri
 ```
 #### `parse_uri`
 *  Params 
+
 ```
 string uri
 ```
+
 *  Response 
+
 ```
 uri_spec uri
 string[] unknown_parameters
@@ -464,6 +554,7 @@ string[] unknown_parameters
 
 
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -473,21 +564,25 @@ string[] unknown_parameters
   }
 }
 ```
+
 #### `add_address_book_entry`
+
 *  Params 
+
 ```
 string address
 string payment_id
 string description
 ```
+
 *  Response
+
 ```
 int index
 ```
 
-
-
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -497,25 +592,32 @@ int index
   }
 }
 ```
+
 #### `get_address_book_entry`
+
 *  Params 
+
 ```
 int[] entries
 ```
+
 * entry 
+
 ```
 int index
 string address
 string payment_id
 string description
 ```
+
 *  Response 
+
 ```
 entry[] entries
 ```
 
-
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -527,15 +629,20 @@ entry[] entries
 ```
 
 #### `delete_address_book_entry`
+
 *  Params 
+
 ```
 int index
 ```
+
 *  Response 
+
 ```
 ```
 
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -546,17 +653,20 @@ int index
 }
 ```
 
-
 #### `rescan_spent`
+
 *  Params 
-```
-```
-*  Response 
+
 ```
 ```
 
+*  Response 
+
+```
+```
 
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -568,15 +678,20 @@ int index
 ```
 
 #### `get_version`
+
 *  Params 
+
 ```
 ```
+
 *  Response 
+
 ```
 int version
 ```
 
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -589,15 +704,19 @@ int version
 
 
 #### `store`
+
 *  Params 
-```
-```
-*  Response 
+
 ```
 ```
 
+*  Response 
+
+```
+```
 
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"store"}' -H 'Content-Type: application/json'
 {
@@ -607,20 +726,24 @@ int version
   }
 }
 ```
+
 #### `refresh`
+
 *  Params 
+
 ```
 int start_height
 ```
+
 *  Response 
+
 ```
 int blocks_fetched
 bool received_money
 ```
 
-
-
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -630,8 +753,11 @@ bool received_money
   }
 }
 ```
+
 #### `set_daemon`
+
 *  Params 
+
 ```
 string address
 bool trusted
@@ -647,11 +773,14 @@ bool ssl_allow_any_cert
 #if 0 // to be enabled when ssl support is added
 #endif
 ```
+
 *  Response 
+
 ```
 ```
 
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -663,16 +792,21 @@ bool ssl_allow_any_cert
 ```
 
 #### `set_log_level`
+
 *  Params 
+
 ```
 int8_t level
 ```
+
 *  Response 
+
 ```
 ```
 
 
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -682,17 +816,24 @@ int8_t level
   }
 }
 ```
+
 #### `set_log_categories`
+
 *  Params 
-```
-string categories
-```
-*  Response 
+
 ```
 string categories
 ```
 
+*  Response 
+
+```
+string categories
+```
+
+
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -704,18 +845,23 @@ string categories
 ```
 
 ### Addresses and Accounts
+
 #### `get_address`
 *  Params 
+
 ```
 int account_index
 int[] address_index
 ```
 *  Response 
+
 ```
 string address
 Address[] addresses
 ```
+
 where `Address` has the following attributes:
+
 ```
 Address:
   string address
@@ -724,7 +870,9 @@ Address:
   bool used
 ```
 
+
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"get_address","params":{"account_index":0,"address_index":[0,1]}}' -H 'Content-Type: application/json'
 {
@@ -748,14 +896,19 @@ Address:
 ```
 
 #### `get_address_index`
+
 *  Params 
+
 ```
 string address
 ```
+
 *  Response 
+
 ```
 SubaddressIndex index
 ```
+
 where `SubaddressIndex` has the following attributes:
 
 ```
@@ -765,6 +918,7 @@ SubaddressIndex:
 ```
 
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"get_address_index","params":{"address":"X.................."}}' -H 'Content-Type: application/json'
 {
@@ -780,14 +934,20 @@ SubaddressIndex:
 ```
 
 #### `get_account_tags`
+
 *  Params 
+
 ```
 ```
+
 *  Response 
+
 ```
 AccountTagInfo[] account_tags
 ```
+
 where `AccountTagInfo` has the following attributes:
+
 ```
 string tag
 string label
@@ -795,6 +955,7 @@ int[] accounts
 ```
 
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"get_account_tags"}' -H 'Content-Type: application/json'
 {
@@ -806,18 +967,23 @@ int[] accounts
 ```
 
 #### `get_accounts`
+
 *  Params
+
 ```
 string tag      // all accounts if empty, otherwise those accounts with this tag
 ```
 
 *  Response 
+
 ```
 int total_balance
 int total_unlocked_balance
 SubaddressAccount[] subaddress_accounts
 ```
+
 where `SubaddressAccount` has the following attributes:
+
 ```
 SubaddressAccounts:
   int account_index
@@ -828,8 +994,8 @@ SubaddressAccounts:
   int unlocked_balance
 ```
 
-
 *  Example
+
 ```
 curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"get_accounts"}' -H 'Content-Type: application/json'
 {
@@ -856,18 +1022,25 @@ curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"get_
   }
 }
 ```
+
 #### `create_address`
+
 *  Params 
+
 ```
 int account_index
 string label
 ```
+
 *  Response 
+
 ```
 string   address
 int      address_index
 ```
+
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"create_address","params":{"account_index":0,"label":"test"}' -H 'Content-Type: application/json'
 {
@@ -881,19 +1054,23 @@ int      address_index
 ```
 
 #### `make_integrated_address`
+
 *  Params 
+
 ```
 string standard_address
 string payment_id
 ```
+
 *  Response 
+
 ```
 string integrated_address
 string payment_id
 ```
 
-
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"make_integrated_address","params":{"standard_address":"...","payment_id":"..."}}' -H 'Content-Type: application/json'
 {
@@ -907,19 +1084,23 @@ string payment_id
 ```
 
 #### `split_integrated_address`
+
 *  Params 
+
 ```
 string integrated_address
 ```
+
 *  Response 
+
 ```
 string standard_address
 string payment_id
 bool is_subaddress
 ```
 
-
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -931,7 +1112,9 @@ bool is_subaddress
 ```
 
 #### `label_address`
+
 *  Params 
+
 ```
 SubaddressIndex index
 string label
@@ -953,6 +1136,7 @@ SubaddressIndex:
 
 
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"label_address","params":{"index":{"major":0,"minor":2},"label":"test14314312"}' -H 'Content-Type: application/json'
 {
@@ -979,17 +1163,22 @@ SubaddressIndex:
 
 
 #### `create_account`
+
 *  Params 
+
 ```
 string label
 ```
+
 *  Response 
+
 ```
 int account_index
 string address      // the 0-th address for convenience
 ```
 
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"create_account"}' -H 'Content-Type: application/json'
 {
@@ -1003,17 +1192,21 @@ string address      // the 0-th address for convenience
 ```
 
 #### `label_account`
+
 *  Params 
+
 ```
 int account_index
 string label
 ```
-*  Response 
-```
-```
 
+*  Response 
+
+```
+```
 
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"label_account","params":{"account_index":0,"label":"mywallet"}}' -H 'Content-Type: application/json'
 {
@@ -1024,19 +1217,22 @@ string label
 }
 ```
 
-
 #### `tag_accounts`
+
 *  Params 
+
 ```
 string tag
 int[] accounts
 ```
-*  Response 
-```
-```
 
+*  Response 
+
+```
+```
 
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"tag_accounts","params":{"tag":"mywallet","accounts":[0]}}' -H 'Content-Type: application/json'
 {
@@ -1048,16 +1244,19 @@ int[] accounts
 ```
 
 #### `untag_accounts`
+
 *  Params 
 ```
 int[] accounts
 ```
-*  Response 
-```
-```
 
+*  Response 
+
+```
+```
 
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"untag_accounts","params":{"accounts":[0]}}' -H 'Content-Type: application/json'
 {
@@ -1069,17 +1268,21 @@ int[] accounts
 ```
 
 #### `set_account_tag_description`
+
 *  Params 
+
 ```
 string tag
 string description
 ```
-*  Response 
-```
-```
 
+*  Response 
+
+```
+```
 
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"set_account_tag_description","params":{"tag":"mywallet","description":"mydescription"}}' -H 'Content-Type: application/json'
 {
@@ -1091,14 +1294,17 @@ string description
 ```
 
 #### `validate_address`
+
 *  Params
+
 ```
 string address
 bool any_net_type
 bool allow_openalias
-
 ```
+
 *  Response 
+
 ```
 bool valid
 bool integrated
@@ -1108,6 +1314,7 @@ string openalias_address
 ```
 
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -1119,8 +1326,11 @@ string openalias_address
 ```
 
 ### Transfers
+
 #### `transfer`
+
 *  Params 
+
 ```
 TransferDestination[] destinations
 int account_index
@@ -1135,14 +1345,18 @@ bool do_not_relay
 bool get_tx_hex
 bool get_tx_metadata
 ```
+
 where `TransferDestination` has the following attributes:
+
 ```
 int amount
 string address
 ```
+
 `amount` is in atomic units. 
 
 *  Response 
+
 ```
 string tx_hash
 string tx_key
@@ -1155,6 +1369,7 @@ string unsigned_txset
 ```
 
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"transfer","params":{"destinations":[{"amount":10000,"address":"W..."}], "account_index":0, "subaddress_indices": [0], "priority":0, "mixin":0, "ring_size":0, "unlock_time":0, "payment_id":"", "get_tx_key":true, "do_not_relay":false,"get_tx_hex":true,"get_tx_metadata":true}}' -H 'Content-Type: application/json'
 {
@@ -1174,7 +1389,9 @@ string unsigned_txset
 ```
 
 #### `transfer_split`
+
 *  Params 
+
 ```
 transfer_destination[] destinations
 int account_index
@@ -1189,8 +1406,11 @@ bool do_not_relay
 bool get_tx_hex
 bool get_tx_metadata
 ```
+
 `amount` is in atomic units. 
+
 *  Response 
+
 ```
 string[] tx_hash_list
 string[] tx_key_list
@@ -1201,7 +1421,9 @@ string[] tx_metadata_list
 string multisig_txset
 string unsigned_txset
 ```
+
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"transfer_split","params":{"destinations":[{"amount":10,"address":"W..."}], "account_index":0, "subaddress_indices": [0], "priority":0, "mixin":0, "ring_size":0, "unlock_time":0, "payment_id":"", "get_tx_key":true, "do_not_relay":false,"get_tx_hex":true,"get_tx_metadata":true}}' -H 'Content-Type: application/json'
 {
@@ -1222,19 +1444,22 @@ string unsigned_txset
 
 #### `sign_transfer`
 *  Params 
+
 ```
 string unsigned_txset
 bool export_raw
 ```
+
 *  Response 
+
 ```
 string signed_txset
 string[] tx_hash_list
 string[] tx_raw_list
 ```
 
-
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"sign_transfer","params":{"unsigned_txset":"....","export_raw":true}}' -H 'Content-Type: application/json'
 {
@@ -1250,15 +1475,19 @@ string[] tx_raw_list
 
 #### `submit_transfer`
 *  Params 
+
 ```
 string tx_data_hex
 ```
+
 *  Response 
+
 ```
 string[] tx_hash_list
 ```
 
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"submit_transfer","params":{"tx_data_hex":"...."}}' -H 'Content-Type: application/json'
 {
@@ -1271,7 +1500,9 @@ string[] tx_hash_list
 ```
 
 #### `sweep_dust`
+
 *  Params 
+
 ```
 bool get_tx_keys
 bool do_not_relay
@@ -1280,6 +1511,7 @@ bool get_tx_metadata
 ```
 
 *  Response 
+
 ```
 string[] tx_hash_list
 string[] tx_key_list
@@ -1291,8 +1523,8 @@ string multisig_txset
 string unsigned_txset
 ```
 
-
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"sweep_dust","params":{"get_tx_key":true, "do_not_relay":false,"get_tx_hex":true,"get_tx_metadata":true}}' -H 'Content-Type: application/json'
 {
@@ -1313,6 +1545,7 @@ string unsigned_txset
 
 #### `sweep_all`
 *  Params 
+
 ```
 string address
 int account_index
@@ -1330,6 +1563,7 @@ bool get_tx_metadata
 ```
 
 *  Response 
+
 ```
 string[] tx_hash_list
 string[] tx_key_list
@@ -1343,6 +1577,7 @@ string unsigned_txset
 
 
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"sweep_all","params":{"address":"W...", "account_index":0, "subaddress_indices": [0], "priority":0, "mixin":0, "ring_size":0, "unlock_time":0, "payment_id":"", "get_tx_key":true, "do_not_relay":false,"get_tx_hex":true,"get_tx_metadata":true}}' -H 'Content-Type: application/json'
 {
@@ -1362,7 +1597,9 @@ string unsigned_txset
 ```
 
 #### `sweep_single`
+
 *  Params 
+
 ```
 string address
 int priority
@@ -1376,7 +1613,9 @@ bool do_not_relay
 bool get_tx_hex
 bool get_tx_metadata
 ```
+
 *  Response 
+
 ```
 string tx_hash
 string tx_key
@@ -1388,8 +1627,8 @@ string multisig_txset
 string unsigned_txset
 ```
 
-
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"sweep_all","params":{"address":"W...", "account_index":0, "subaddress_indices": [0], "priority":0, "mixin":0, "ring_size":0, "unlock_time":0, "payment_id":"", "get_tx_key":true, "key_image":"...","do_not_relay":false,"get_tx_hex":true,"get_tx_metadata":true}}' -H 'Content-Type: application/json'
 {
@@ -1409,17 +1648,23 @@ string unsigned_txset
 ```
 
 #### `relay_tx`
+
 *  Params 
+
 ```
 string hex
 ```
+
 *  Response 
+
 ```
 string tx_hash
 ```
 
 
+
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"relay_tx","params":{"hex":"..."}}' -H 'Content-Type: application/json'
 {
@@ -1432,12 +1677,15 @@ string tx_hash
 ```
 
 #### `get_payments`
-*  Params 
+
+*  Params
+ 
 ```
 string payment_id
 ```
 
-*  Response 
+*  Response
+ 
 ```
 PaymentDetails[] payments
 ```
@@ -1459,7 +1707,9 @@ SubaddressIndex:
   int minor
 ```
 
+
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"get_payments","params":{"payment_id":"..."}}' -H 'Content-Type: application/json'
 {
@@ -1488,12 +1738,15 @@ SubaddressIndex:
 }
 ```
 #### `get_bulk_payments`
-*  Params 
+
+*  Params
+ 
 ```
 string[] payment_ids
 int min_block_height
 ```
-*  Response 
+*  Response
+ 
 ```
 PaymentDetails[] payments
 ```
@@ -1514,7 +1767,9 @@ SubaddressIndex:
   int major
   int minor
 ```
+
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"get_bulk_payments","params":{"payment_id":["...","...","..."],"min_block_height":1500000}}' -H 'Content-Type: application/json'
 {
@@ -1543,14 +1798,18 @@ SubaddressIndex:
 }
 ```
 #### `incoming_transfers`
-*  Params 
+
+*  Params
+ 
 ```
 string transfer_type
 int account_index
 int[] subaddr_indices
 
 ```
-*  Response 
+
+*  Response
+ 
 ```
 TransferDetails[] transfers
 ```
@@ -1569,7 +1828,9 @@ SubaddressIndex:
   int major
   int minor
 ```
+
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"incoming_transfers","params":{"transfer_type":"...","account_index":0,"subaddr_indices:[0]}}' -H 'Content-Type: application/json'
 {
@@ -1596,17 +1857,23 @@ SubaddressIndex:
 }
 ```
 #### `query_key`
-*  Params 
+
+*  Params
+ 
 ```
 string key_type
 ```
-*  Response 
+
+*  Response
+ 
 ```
 string key
 ```
 
 
+
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"query_key","params":{"key_type":"..."}]}' -H 'Content-Type: application/json'
 {
@@ -1618,19 +1885,25 @@ string key
 }
 ```
 #### `set_tx_notes`
-*  Params 
+
+*  Params
+ 
 ```
 string[] txids
 string[] notes
 
 ```
 
-*  Response 
+
+*  Response
+ 
 ```
 ```
+
 
 
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -1642,17 +1915,23 @@ string[] notes
 ```
 
 #### `get_tx_notes`
-*  Params 
+
+*  Params
+ 
 ```
 string[] txids
 ```
-*  Response 
+
+*  Response
+ 
 ```
 string[] notes
 ```
 
 
+
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -1664,7 +1943,9 @@ string[] notes
 ```
 
 #### `get_transfers`
-*  Params 
+
+*  Params
+ 
 ```
 bool in
 bool out
@@ -1697,7 +1978,9 @@ bool double_spend_seen
 int confirmations
 int suggested_confirmations_threshold
 ```
-*  Response 
+
+*  Response
+ 
 ```
 transfer_entry[] in
 transfer_entry[] out
@@ -1708,7 +1991,9 @@ transfer_entry[] pool
 
 
 
+
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -1719,19 +2004,25 @@ transfer_entry[] pool
 }
 ```
 #### `get_transfer_by_txid`
-*  Params 
+
+*  Params
+ 
 ```
 string txid
 int account_index
 ```
-*  Response 
+
+*  Response
+ 
 ```
 transfer_entry transfer
 transfer_entry[] transfers
 ```
 
 
+
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -1743,16 +2034,22 @@ transfer_entry[] transfers
 ```
 
 #### `export_outputs`
-*  Params 
+
+*  Params
+ 
 ```
 ```
-*  Response 
+
+*  Response
+ 
 ```
 string outputs_data_hex
 ```
 
 
+
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -1764,17 +2061,23 @@ string outputs_data_hex
 ```
 
 #### `import_outputs`
-*  Params 
+
+*  Params
+ 
 ```
 string outputs_data_hex
 ```
-*  Response 
+
+*  Response
+ 
 ```
 int num_imported
 ```
 
 
+
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -1786,7 +2089,9 @@ int num_imported
 ```
 
 #### `export_key_images`
-*  Params 
+
+*  Params
+ 
 ```
 ```
 * signed_key_image 
@@ -1794,13 +2099,17 @@ int num_imported
 string key_image
 string signature
 ```
-*  Response 
+
+*  Response
+ 
 ```
 signed_key_image[] signed_key_images
 ```
 
 
+
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -1817,11 +2126,15 @@ signed_key_image[] signed_key_images
 string key_image
 string signature
 ```
-*  Params 
+
+*  Params
+ 
 ```
 signed_key_image[] signed_key_images
 ```
-*  Response 
+
+*  Response
+ 
 ```
 int height
 int spent
@@ -1829,7 +2142,9 @@ int unspent
 ```
 
 
+
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -1841,17 +2156,23 @@ int unspent
 ```
 ### Proofs and Signatures
 #### `sign`
-*  Params 
+
+*  Params
+ 
 ```
 string data
 ```
-*  Response 
+
+*  Response
+ 
 ```
 string signature
 ```
 
 
+
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -1863,19 +2184,25 @@ string signature
 ```
 
 #### `verify`
-*  Params 
+
+*  Params
+ 
 ```
 string data
 string address
 string signature
 ```
-*  Response 
+
+*  Response
+ 
 ```
 bool good
 ```
 
 
+
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -1887,17 +2214,23 @@ bool good
 ```
 
 #### `get_tx_key`
-*  Params 
+
+*  Params
+ 
 ```
 string txid
 ```
-*  Response 
+
+*  Response
+ 
 ```
 string tx_key
 ```
 
 
+
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -1909,20 +2242,26 @@ string tx_key
 ```
 
 #### `check_tx_key`
-*  Params 
+
+*  Params
+ 
 ```
 string txid
 string tx_key
 string address
 ```
-*  Response 
+
+*  Response
+ 
 ```
 int received
 bool in_pool
 int confirmations
 ```
 
+
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -1935,19 +2274,25 @@ int confirmations
 
 
 #### `get_tx_proof`
-*  Params 
+
+*  Params
+ 
 ```
 string txid
 string address
 string message
 ```
+
 *  Response
+
 ```
 string signature
 ```
 
 
+
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -1959,14 +2304,23 @@ string signature
 ```
 
 #### `check_tx_proof`
-*  Params 
+
+
+*  Params
+ 
+
 ```
 string txid
 string address
 string message
 string signature
 ```
-*  Response 
+
+
+*  Response
+ 
+
+
 ```
 bool good
 int received
@@ -1975,7 +2329,11 @@ int confirmations
 
 ```
 
+
 *  Example
+
+
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -1986,18 +2344,31 @@ int confirmations
 }
 ```
 #### `get_spend_proof`
-*  Params 
+
+*  Params
+ 
+
+
 ```
 string txid
 string message
 ```
-*  Response 
+
+
+*  Response
+ 
+
+
 ```
 string signature
 ```
 
 
+
 *  Example
+
+
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -2009,19 +2380,32 @@ string signature
 ```
 
 #### `check_spend_proof`
-*  Params 
+
+*  Params
+ 
+
+
 ```
 string txid
 string message
 string signature
 ```
-*  Response 
+
+
+*  Response
+ 
+
+
 ```
 bool good
 ```
 
 
+
 *  Example
+
+
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -2033,20 +2417,33 @@ bool good
 ```
 
 #### `get_reserve_proof`
-*  Params 
+
+*  Params
+ 
+
+
 ```
 bool all
 int account_index     // ignored when `all` is true
 int amount            // ignored when `all` is true
 string message
 ```
-*  Response 
+
+
+*  Response
+ 
+
+
 ```
 string signature
 ```
 
 
+
 *  Example
+
+
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -2058,13 +2455,17 @@ string signature
 ```
 
 #### `check_reserve_proof`
-*  Params 
+
+*  Params
+ 
 ```
 string address
 string message
 string signature
 ```
-*  Response 
+
+*  Response
+ 
 ```
 bool good
 int total
@@ -2073,7 +2474,9 @@ int spent
 
 
 
+
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -2085,10 +2488,14 @@ int spent
 ```
 ### Multisig
 #### `is_multisig`
-*  Params 
+
+*  Params
+ 
 ```
 ```
-*  Response 
+
+*  Response
+ 
 ```
 bool multisig
 bool ready
@@ -2096,7 +2503,9 @@ int threshold
 int total
 ```
 
+
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -2109,16 +2518,22 @@ int total
 
 
 #### `prepare_multisig`
-*  Params 
+
+*  Params
+ 
 ```
 ```
-*  Response 
+
+*  Response
+ 
 ```
 string multisig_info
 ```
 
 
+
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -2130,20 +2545,26 @@ string multisig_info
 ```
 
 #### `make_multisig`
+
 *  Params
+
 ```
 string[] multisig_info
 int threshold
 string password
 ```
-*  Response 
+
+*  Response
+ 
 ```
 string address
 string multisig_info
 ```
 
 
+
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -2155,17 +2576,23 @@ string multisig_info
 ```
 
 #### `export_multisig`
-*  Params 
+
+*  Params
+ 
 ```
 ```
-*  Response 
+
+*  Response
+ 
 ```
 string info
 ```
 
 
 
+
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -2177,17 +2604,23 @@ string info
 ```
 
 #### `import_multisig`
-*  Params 
+
+*  Params
+ 
 ```
 string[] info
 ```
 
-*  Response 
+
+*  Response
+ 
 ```
 int n_outputs
 ```
 
+
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -2200,18 +2633,24 @@ int n_outputs
 
 
 #### `finalize_multisig`
-*  Params 
+
+*  Params
+ 
 ```
 string password
 string[] multisig_info
 ```
-*  Response 
+
+*  Response
+ 
 ```
 string address
 ```
 
 
+
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -2223,18 +2662,24 @@ string address
 ```
 
 #### `exchange_multisig_keys`
-*  Params 
+
+*  Params
+ 
 ```
 string password
 string[] multisig_info
 ```
-*  Response 
+
+*  Response
+ 
 ```
 string address
 string multisig_info
 ```
 
+
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -2246,18 +2691,24 @@ string multisig_info
 ```
 
 #### `sign_multisig`
-*  Params 
+
+*  Params
+ 
 ```
 string tx_data_hex
 ```
-*  Response 
+
+*  Response
+ 
 ```
 string tx_data_hex
 string[] tx_hash_list
 ```
 
 
+
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
@@ -2269,16 +2720,22 @@ string[] tx_hash_list
 ```
 
 #### `submit_multisig`
-*  Params 
+
+*  Params
+ 
 ```
 string tx_data_hex
 ```
-*  Response 
+
+*  Response
+ 
 ```
 string[] tx_hash_list
 ```
 
+
 *  Example
+
 ```
 >>> curl http://127.0.0.1:5000/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"","params":}' -H 'Content-Type: application/json'
 {
